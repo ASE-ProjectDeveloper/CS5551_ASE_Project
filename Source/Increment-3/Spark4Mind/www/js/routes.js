@@ -72,6 +72,15 @@ angular.module('app.routes', [])
     }
   })
   
+      .state('menu.feedback', {
+    url: '/page16',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/feedback.html',
+        controller: 'feedbackCtrl'
+      }
+    }
+  })
   .state('menu.classes', {
     url: '/page10',
     views: {
