@@ -195,7 +195,7 @@ function ($scope, $stateParams) {
     $scope.searchArticle=function(){
 
       var searchQuery = document.getElementById("articleWord").value;
-       $http.get('http://api.nytimes.com/svc/search/v2/articlesearch.json?q='+searchQuery+'&facet_field=source&facet_filter=true&begin_date=20160505&end_date=20161005&api-key=24c318449f40e9695d3ff025f7cf7ba1:11:54196591').success(function(response){
+       $http.get('http://api.nytimes.com/svc/search/v2/articlesearch.json?q='+searchQuery+'&facet_field=source&facet_filter=true&begin_date=20160505&end_date=20161005&api-key=ed61c93e03a7869f865195212bab69b8:4:73598028').success(function(response){
       angular.forEach(response.response.docs, function(child){
        console.log (child);
            $scope.articlesResult.push(child);
