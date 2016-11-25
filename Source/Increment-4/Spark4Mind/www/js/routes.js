@@ -107,7 +107,16 @@ angular.module('app.routes', [])
     controller: 'registerCtrl'
   })
 
-
+    .state('menu.music', {
+    url: '/page17',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/music.html',
+        controller: 'musicCtrl'
+      }
+    }
+  })
+  
    .state('menu.video', {
     url: '/page6',
     views: {
