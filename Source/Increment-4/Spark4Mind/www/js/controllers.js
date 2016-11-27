@@ -162,7 +162,8 @@ function ($scope, $stateParams) {
       document.getElementById("a5").classList.remove('active');
       document.getElementById("a6").classList.remove('active');
         document.getElementById("a2").classList.add('ac/tive');
-      //document.getElementById('worldtitle').style.visibility = hidden;
+      //document.getElementById('worldtitle').style.display = none;
+      //document.getElementById('worldabs').style.display = none;
       //document.getElementById('worldabs').style.visibility = hidden;
        $http.get('http://api.nytimes.com/svc/topstories/v1/technology.json?callback=callbackTopStories&api-key=ed61c93e03a7869f865195212bab69b8:4:73598028').success(function(response){
       angular.forEach(response.results, function(child){
