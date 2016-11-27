@@ -78,6 +78,13 @@ function ($scope, $stateParams) {
 }])
 
 
+.controller('musicCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
 
 .controller('registerCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
@@ -140,9 +147,6 @@ function ($scope, $stateParams) {
     $scope.refreshWorld=function(){
 
         document.getElementById("a2").classList.remove('active');
-      document.getElementById("a4").classList.remove('active');
-      document.getElementById("a5").classList.remove('active');
-      document.getElementById("a6").classList.remove('active');
         document.getElementById("a1").classList.add('active');
        $http.get('http://api.nytimes.com/svc/topstories/v1/world.json?callback=callbackTopStories&api-key=ed61c93e03a7869f865195212bab69b8:4:73598028').success(function(response){
       angular.forEach(response.results, function(child){
@@ -154,17 +158,8 @@ function ($scope, $stateParams) {
 
     $scope.refreshTech=function(){
 
-      //window.location.reload();
-     //document.getElementById('worldtitle').innerHTML = "";
-      //document.getElementById('worldabs').innerHTML = "";
-      document.getElementById("a1").classList.remove('active');
-      document.getElementById("a4").classList.remove('active');
-      document.getElementById("a5").classList.remove('active');
-      document.getElementById("a6").classList.remove('active');
-        document.getElementById("a2").classList.add('ac/tive');
-      //document.getElementById('worldtitle').style.display = none;
-      //document.getElementById('worldabs').style.display = none;
-      //document.getElementById('worldabs').style.visibility = hidden;
+     document.getElementById("a1").classList.remove('active');
+        document.getElementById("a2").classList.add('active');
        $http.get('http://api.nytimes.com/svc/topstories/v1/technology.json?callback=callbackTopStories&api-key=ed61c93e03a7869f865195212bab69b8:4:73598028').success(function(response){
       angular.forEach(response.results, function(child){
        console.log (child);
@@ -175,11 +170,7 @@ function ($scope, $stateParams) {
 
   $scope.refreshSports=function(){
 
-    document.getElementById("a1").classList.remove('active');
-    document.getElementById("a3").classList.remove('active');
-    document.getElementById("a5").classList.remove('active');
-    document.getElementById("a6").classList.remove('active');
-    document.getElementById("a4").classList.add('active');
+
     $http.get('http://api.nytimes.com/svc/topstories/v1/sports.json?callback=callbackTopStories&api-key=ed61c93e03a7869f865195212bab69b8:4:73598028')
       .success(function(response){
         angular.forEach(response.results, function(child){
@@ -191,11 +182,7 @@ function ($scope, $stateParams) {
 
   $scope.refreshDining=function(){
 
-    document.getElementById("a1").classList.remove('active');
-    document.getElementById("a4").classList.remove('active');
-    document.getElementById("a5").classList.remove('active');
-    document.getElementById("a2").classList.remove('active');
-    document.getElementById("a6").classList.add('active');
+
     $http.get('http://api.nytimes.com/svc/topstories/v1/dining.json?callback=callbackTopStories&api-key=ed61c93e03a7869f865195212bab69b8:4:73598028')
       .success(function(response){
         angular.forEach(response.results, function(child){
@@ -207,11 +194,7 @@ function ($scope, $stateParams) {
 
   $scope.refreshFashion=function(){
 
-    document.getElementById("a1").classList.remove('active');
-    document.getElementById("a4").classList.remove('active');
-    document.getElementById("a2").classList.remove('active');
-    document.getElementById("a6").classList.remove('active');
-    document.getElementById("a5").classList.add('active');
+
     $http.get('http://api.nytimes.com/svc/topstories/v1/fashion.json?callback=callbackTopStories&api-key=ed61c93e03a7869f865195212bab69b8:4:73598028')
       .success(function(response){
         angular.forEach(response.results, function(child){

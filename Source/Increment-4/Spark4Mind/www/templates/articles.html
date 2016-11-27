@@ -1,6 +1,6 @@
 <ion-view title="Articles" id="page12">
     <ion-content padding="true" style="background: url(img/background.jpg) no-repeat center;background-size:cover;" class="has-header">
-    <form id="articles" ng-submit="searchArticle()">
+
 
 
 
@@ -8,13 +8,11 @@
         <label class="item item-input" id="article-input1">
             <input id="articleWord" type="text" placeholder="" style="border:2px black;">
         </label>
+      
 
 
+    <button id="joinClass-button6" class="button button-positive  button-block" ng-click="searchArticle()" >Go</button>
 
-    <button id="joinClass-button6" class="button button-positive  button-block"  >Go</button>
-
-
-      <div id="articleres">
         <ion-list>
       <ion-item ng-repeat="i in articlesResult" class="item item-text-wrap" >
 
@@ -22,8 +20,8 @@
 
         </ion-item>
     </ion-list>
-      </div>
 
-    </form>
+
+
     </ion-content>
 </ion-view>
