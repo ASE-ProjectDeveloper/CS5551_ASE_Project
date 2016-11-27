@@ -1,7 +1,9 @@
 <ion-view title="NYTimes" id="page14">
     <ion-header-bar >
+      <form >
         <div class="tabs-striped tabs-top tabs-background-balanced tabs-color-light">
     <div class="tabs">
+
 
       <a id="a1" class="tab-item" data-ng-click="refreshWorld()">
         <i class="icon ion-ios-world"></i>
@@ -28,6 +30,7 @@
 
         </div>
         </div>
+      </form>
     </ion-header-bar>
     <ion-content padding="true" style="background: url(img/background.jpg) no-repeat center;background-size:cover;" class="has-header">
 
@@ -36,8 +39,8 @@
   <div id="world" class="clear-block" style="border-top-left-radius: 10px !important;border-top-right-radius: 10px !important;">
         <ion-list>
       <ion-item ng-repeat="i in worldResult" class="item item-text-wrap" >
-             <p>{{i.title}}</p>
-            <p>{{i.abstract}}</p>
+             <p id="worldtitle">{{i.title}}</p>
+            <p id="worldabs">{{i.abstract}}</p>
         </ion-item>
     </ion-list>
    </div>
