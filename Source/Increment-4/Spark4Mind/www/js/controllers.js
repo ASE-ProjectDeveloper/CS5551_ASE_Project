@@ -1,59 +1,58 @@
-angular.module('app.controllers', [])
-
-.controller('homeCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+var MobileApp=angular.module('app.controllers', ["firebase"])
+var shareUserName=null;
+MobileApp.controller('homeCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
-
+$scope.name=shareUserName;
 
 }])
 
 
-.controller('loginCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('loginCtrl', ['$scope','$state','$stateParams','$firebaseAuth', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-$scope.FBlogin= function () {
-
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '227985260951259',
-                cookie     : true,  // enable cookies to allow the server to access
-                                    // the session
-                xfbml      : true,  // parse social plugins on this page
-                version    : 'v2.5' // use graph api version 2.5
-            });
-
-            FB.login(function(response) {
-                if (response.authResponse) {
-                    console.log('Welcome!  Fetching your information.... ');
-                    FB.api('/me', function(response) {
-                        console.log('Good to see you, ' + response.name + '.');
-
-                    });
-                } else {
-                    console.log('User cancelled login or did not fully authorize.');
-                }
-            });
-
-            FB.getLoginStatus(function(response) {
-                console.log(response.status);
-            });
-        };
+function ($scope,$state,$stateParams,$firebaseAuth) {
+    
+    // Initialize Firebase
+       var config = {
+        apiKey: "AIzaSyBAQ9oM4_25d-_6wHripf9_WKOwf96eEIo",
+        authDomain: "spark4mind-64a5e.firebaseapp.com",
+        databaseURL: "https://spark4mind-64a5e.firebaseio.com",
+        storageBucket: "spark4mind-64a5e.appspot.com",
+        messagingSenderId: "488750004666"
+      };
+     firebase.initializeApp(config);
+     var fbAuth = $firebaseAuth();
+      
+     //Login into application using Firebase Authencation
+     $scope.login=function(username,password){       
+         shareUserName=username.split("@")[0];
+         console.log("Username:"+shareUserName+" Password:"+password);
+         fbAuth.$signInWithEmailAndPassword(username,password).then(function(authData) {
+             $state.go("menu.home");
+ 		}).catch(function(error) {
+             alert("UnAuthencated User");
+             $state.go("login");
+         });
+     }
+     
+     //Register 
+     $scope.register = function(username, password) {
+        fbAuth.$createUserWithEmailAndPassword(username,password).then(function(userData) {
+            return fbAuth.$signInWithEmailAndPassword(username,
+                password);
+        }).then(function(authData) {
+            alert("Register Successfull !! Please Login");
+            $state.go("login");
+        }).catch(function(error) {
+            console.error("ERROR: " + error);
+        });
     }
 
 }])
 
-.controller('myProgessCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('myProgessCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -61,7 +60,7 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('menuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('menuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -69,24 +68,7 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('settingsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-
-
-.controller('musicCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-
-.controller('registerCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('settingsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -95,7 +77,24 @@ function ($scope, $stateParams) {
 }])
 
 
-.controller('videoCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('musicCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+MobileApp.controller('registerCtrl', ['$scope','$state','$stateParams','$firebaseAuth', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope,$state,$stateParams,$firebaseAuth) {
+    
+
+}])
+
+
+MobileApp.controller('videoCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -104,7 +103,7 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('galleryCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('galleryCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -112,7 +111,7 @@ function ($scope, $stateParams) {
 
 }])
 
-  .controller('booksCtrl', function ($scope, $http) {
+MobileApp.controller('booksCtrl', function ($scope, $http) {
 
     $scope.booksResult = [];
 
@@ -136,7 +135,7 @@ function ($scope, $stateParams) {
 
   })
 
-.controller('nytimesCtrl', function ($scope, $http) {
+MobileApp.controller('nytimesCtrl', function ($scope, $http) {
 
        $scope.worldResult = [];
         $scope.techResult = [];
@@ -207,7 +206,7 @@ function ($scope, $stateParams) {
 
 })
 
-.controller('feedbackCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('feedbackCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -217,7 +216,7 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('articlesCtrl', function ($scope, $http) {
+MobileApp.controller('articlesCtrl', function ($scope, $http) {
 
        $scope.articlesResult = [];
 
@@ -239,7 +238,7 @@ function ($scope, $stateParams) {
 
 })
 
-.controller('classesCtrl', function ($scope, $http) {
+MobileApp.controller('classesCtrl', function ($scope, $http) {
         $scope.venueList = new Array();
         //$scope.mostRecentReview;
         $scope.getVenues = function () {
