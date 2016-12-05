@@ -23,3 +23,11 @@ html,body{
 .icon-classes{
     color: brown;
 }
+.col-md-6{
+    height: 160px;
+    padding: 5px;
+}
+.col-xs-6{
+    height: 160px;
+    padding: 5px;
+}

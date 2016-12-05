@@ -12,60 +12,124 @@
             </div>
 
         </div>
-		<div class="spacer" style="height: 20px;"></div>
-		<!--<table>
-			<tr>
-				<td><a ui-sref="menu.video"><img src="img/video.jpg" width='90%' height='50%'></a></td>
-				<td><a ui-sref="menu.video"><img src="img/Music.png" width='90%' height='50%'></a></td>
-			</tr>
-			<tr>
-				<td><div class="spacer" style="height: 20px;"></div></td>
+		<div class="wrapper">
 
-			<tr>
-				<td><a ui-sref="menu.gallery"><img src="img/photo.png" width='90%' height='45%'></a></td>
-				<td><a ui-sref="menu.classes"><img src="img/class.png" width='90%' height='50%'></a></td>
-			</tr>
-		</table>-->
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-6">
-                    <a ui-sref="menu.music" id="music" class="button button-stable button-block"><span class="icon icon-music ion-music-note"></span>&nbsp;&nbsp;Music</a>
-                </div>
-                <div class="col-xs-6">
-                    <a ui-sref="menu.video" id="music" class="button button-stable button-block"><span class="icon icon-video ion-social-youtube"></span>&nbsp;&nbsp;Video</a>
-                </div>
+           <main>
+            <div class="container">
+
+             <div class="section">
+                <div class="section__content clearfix">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="card effect__random" data-id="1">
+                                <a ui-sref="menu.video">
+                                <div class="card__front">
+                                    <span class="card__text">Video</span>             
+                                </div></a>
+                                <a ui-sref="menu.video">
+                                <div class="card__back">
+                                  <span class="card__text">Video</span>
+                                </div></a>
+                              </div><!-- /card -->
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="card effect__random" data-id="2">
+                                <a ui-sref="menu.music">
+                                <div class="card__front">
+                                    <span class="card__text">Music</span>             
+                                </div></a>
+                                <a ui-sref="menu.music">
+                                <div class="card__back">
+                                  <span class="card__text">Music</span>
+                                </div></a>
+                              </div><!-- /card -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="card effect__random" data-id="3">
+                                <a ui-sref="menu.gallery">
+                                <div class="card__front">
+                                    <span class="card__text">Gallery</span>             
+                                </div></a>
+                                <a ui-sref="menu.gallery">
+                                <div class="card__back">
+                                  <span class="card__text">Gallery</span>
+                                </div></a>
+                              </div><!-- /card -->
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="card effect__random" data-id="4">
+                                <a ui-sref="menu.nytimes">
+                                <div class="card__front">
+                                    <span class="card__text">News</span>             
+                                </div></a>
+                                <a ui-sref="menu.nytimes">
+                                <div class="card__back">
+                                  <span class="card__text">News</span>
+                                </div></a>
+                              </div><!-- /card -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="card effect__random" data-id="5">
+                                <a ui-sref="menu.articles">
+                                <div class="card__front">
+                                    <span class="card__text">Read Article</span>             
+                                </div></a>
+                                <a ui-sref="menu.articles">
+                                <div class="card__back">
+                                  <span class="card__text">Read Article</span>
+                                </div></a>
+                              </div><!-- /card -->
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="card effect__random" data-id="6">
+                                <a ui-sref="menu.classes">
+                                <div class="card__front">
+                                    <span class="card__text">Join class</span>             
+                                </div></a>
+                                <a ui-sref="menu.classes">
+                                <div class="card__back">
+                                  <span class="card__text">Join class</span>
+                                </div></a>
+                              </div><!-- /card -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="card effect__random" data-id="7">
+                                <a ui-sref="menu.books">
+                                <div class="card__front">
+                                    <span class="card__text">Books</span>             
+                                </div></a>
+                                <a ui-sref="menu.books">
+                                <div class="card__back">
+                                  <span class="card__text">Books</span>
+                                </div></a>
+                              </div><!-- /card -->
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="card effect__random" data-id="8">
+                                <a ui-sref="menu.video">
+                                <div class="card__front">
+                                    <span class="card__text">Games</span>             
+                                </div></a>
+                                <a ui-sref="menu.video">
+                                <div class="card__back">
+                                  <span class="card__text">Games</span>
+                                </div></a>
+                              </div><!-- /card -->
+                        </div>
+                    </div>
+
+
+                </div><!-- /card -->
+              </div><!-- /section -->
+
             </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <a ui-sref="menu.gallery" id="music" class="button button-stable button-block"><span class="icon icon-gallery ion-images"></span>&nbsp;&nbsp;Gallery</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6">
-                    <a ui-sref="menu.nytimes" id="music" class="button button-stable button-block"><span class="icon icon-news ion-speakerphone"></span>&nbsp;&nbsp;News</a>
-                </div>
-                <div class="col-xs-6">
-                    <a ui-sref="menu.articles" id="music" class="button button-stable button-block"><span class="icon icon-article ion-clipboard"></span>&nbsp;&nbsp;Article</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <a ui-sref="menu.classes" id="music" class="button button-stable button-block"><span class="icon icon-classes ion-easel"></span>&nbsp;&nbsp;Join Class</a>
-                </div>
-            </div>
-          <div class="row">
-            <div class="col-xs-6">
-              <a ui-sref="menu.books" id="books" class="button button-stable button-block"><span class="ion-ios-book"></span>&nbsp;Book</a>
-            </div>
-			<div class="col-xs-6">
-              <a ui-sref="menu.game" id="books" class="button button-stable button-block"><span class="ion-ios-game-controller-b"></span>&nbsp;Game</a>
-            </div>
-          </div>
-		    <!--<div class="row">
-            <div class="col-xs-12">
-              <a ui-sref="menu.feedback" id="books" class="button button-stable button-block"><span class="icon icon-article ion-clipboard"></span>&nbsp;Feedback</a>
-            </div>
-          </div>-->
-        </div>
-	</ion-content>
+          </main><!-- /main -->  
+        </div><!-- /#wrapper -->		
+    </ion-content>
 </ion-view>
