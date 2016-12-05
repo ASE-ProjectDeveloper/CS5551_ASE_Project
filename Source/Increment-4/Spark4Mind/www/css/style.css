@@ -34,3 +34,9 @@ html,body{
 fa{
     color: #ffffff;
 }
+.video_title{
+    color: #000000;
+}
+.fa-youtube-play{
+    color: red;
+}

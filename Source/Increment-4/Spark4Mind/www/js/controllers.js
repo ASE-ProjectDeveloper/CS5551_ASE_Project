@@ -160,11 +160,24 @@ function ($scope,$state,$stateParams,$firebaseAuth) {
 }])
 
 
-MobileApp.controller('videoCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('videoCtrl', ['$scope', '$stateParams','$timeout','$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams,$timeout,$ionicLoading) {
 
+    // Setup the loader
+  $ionicLoading.show({
+    content: 'Loading',
+    animation: 'fade-in',
+    showBackdrop: true,
+    maxWidth: 200,
+    showDelay: 0
+  });
+  
+  // Set a timeout to clear loader
+  $timeout(function () {
+    $ionicLoading.hide();
+  }, 5000);
 
 
 }])
