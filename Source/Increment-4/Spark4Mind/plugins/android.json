@@ -8,25 +8,25 @@
     },
     "installed_plugins": {
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.spark4mind760332"
+            "PACKAGE_NAME": "com.ionicframework.spark4mind736870"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.spark4mind760332"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.spark4mind760332"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.spark4mind760332"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.spark4mind760332"
-        },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.spark4mind760332"
+            "PACKAGE_NAME": "com.ionicframework.spark4mind736870"
         },
         "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "com.ionicframework.spark4mind760332"
+            "PACKAGE_NAME": "com.ionicframework.spark4mind736870"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.spark4mind736870"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.spark4mind736870"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.spark4mind736870"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.spark4mind736870"
         }
     },
     "dependent_plugins": {}

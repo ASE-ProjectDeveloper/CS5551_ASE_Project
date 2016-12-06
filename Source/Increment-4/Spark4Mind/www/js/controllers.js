@@ -1,59 +1,124 @@
-angular.module('app.controllers', [])
-
-.controller('homeCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+var MobileApp=angular.module('app.controllers', ["firebase"])
+var shareUserName=null;
+MobileApp.controller('homeCtrl', ['$scope', '$stateParams','$timeout','$ionicLoading',  // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams,$timeout,$ionicLoading) {
+    
+  // Setup the loader
+  $ionicLoading.show({
+    content: 'Loading',
+    animation: 'fade-in',
+    showBackdrop: true,
+    maxWidth: 200,
+    showDelay: 0
+  });
+  
+  // Set a timeout to clear loader
+  $timeout(function () {
+    $ionicLoading.hide();
+  }, 4000);
+    
+$scope.name=shareUserName;
+    
+    
+(function() {
+  var cards = document.querySelectorAll(".card.effect__click");
+  for ( var i  = 0, len = cards.length; i < len; i++ ) {
+    var card = cards[i];
+    clickListener( card );
+  }
+  function clickListener(card) {
+    card.addEventListener( "click", function() {
+      var c = this.classList;
+      c.contains("flipped") === true ? c.remove("flipped") : c.add("flipped");
+    });
+  }
+})();
 
+
+(function() {
+  // cache vars
+  var cards = document.querySelectorAll(".card.effect__random");
+  var timeMin = 2;
+  var timeMax = 5;
+  var timeouts = [];
+
+  // loop through cards
+  for ( var i = 0, len = cards.length; i < len; i++ ) {
+    var card = cards[i];
+    var cardID = card.getAttribute("data-id");
+    var id = "timeoutID" + cardID;
+    var time = randomNum( timeMin, timeMax ) * 1000;
+    cardsTimeout( id, time, card );
+  }
+
+  // timeout listener
+  function cardsTimeout( id, time, card ) {
+    if (id in timeouts) {
+      clearTimeout(timeouts[id]);
+    }
+    timeouts[id] = setTimeout( function() {
+      var c = card.classList;
+      var newTime = randomNum( timeMin, timeMax ) * 1000;
+      c.contains("flipped") === true ? c.remove("flipped") : c.add("flipped");
+      cardsTimeout( id, newTime, card );
+    }, time );
+  }
+
+  // random number generator given min and max
+  function randomNum( min, max ) {
+    return Math.random() * (max - min) + min;
+  }
+})();
 
 }])
 
 
-.controller('loginCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('loginCtrl', ['$scope','$state','$stateParams','$firebaseAuth', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-$scope.FBlogin= function () {
-
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '227985260951259',
-                cookie     : true,  // enable cookies to allow the server to access
-                                    // the session
-                xfbml      : true,  // parse social plugins on this page
-                version    : 'v2.5' // use graph api version 2.5
-            });
-
-            FB.login(function(response) {
-                if (response.authResponse) {
-                    console.log('Welcome!  Fetching your information.... ');
-                    FB.api('/me', function(response) {
-                        console.log('Good to see you, ' + response.name + '.');
-
-                    });
-                } else {
-                    console.log('User cancelled login or did not fully authorize.');
-                }
-            });
-
-            FB.getLoginStatus(function(response) {
-                console.log(response.status);
-            });
-        };
+function ($scope,$state,$stateParams,$firebaseAuth) {
+    
+    // Initialize Firebase
+       var config = {
+        apiKey: "AIzaSyBAQ9oM4_25d-_6wHripf9_WKOwf96eEIo",
+        authDomain: "spark4mind-64a5e.firebaseapp.com",
+        databaseURL: "https://spark4mind-64a5e.firebaseio.com",
+        storageBucket: "spark4mind-64a5e.appspot.com",
+        messagingSenderId: "488750004666"
+      };
+     firebase.initializeApp(config);
+     var fbAuth = $firebaseAuth();
+      
+     //Login into application using Firebase Authencation
+     $scope.login=function(username,password){       
+         shareUserName=username.split("@")[0];
+         console.log("Username:"+shareUserName+" Password:"+password);
+         fbAuth.$signInWithEmailAndPassword(username,password).then(function(authData) {
+             $state.go("menu.home");
+ 		}).catch(function(error) {
+             alert("UnAuthencated User");
+             $state.go("login");
+         });
+     }
+     
+     //Register 
+     $scope.register = function(username, password) {
+        fbAuth.$createUserWithEmailAndPassword(username,password).then(function(userData) {
+            return fbAuth.$signInWithEmailAndPassword(username,
+                password);
+        }).then(function(authData) {
+            alert("Register Successfull !! Please Login");
+            $state.go("login");
+        }).catch(function(error) {
+            console.error("ERROR: " + error);
+        });
     }
 
 }])
 
-.controller('myProgessCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('myProgessCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -61,7 +126,7 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('menuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('menuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -69,24 +134,7 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('settingsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-
-
-.controller('musicCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-
-.controller('registerCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('settingsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -95,16 +143,7 @@ function ($scope, $stateParams) {
 }])
 
 
-.controller('videoCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-
-}])
-
-.controller('galleryCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('musicCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -112,7 +151,46 @@ function ($scope, $stateParams) {
 
 }])
 
-  .controller('booksCtrl', function ($scope, $http) {
+MobileApp.controller('registerCtrl', ['$scope','$state','$stateParams','$firebaseAuth', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope,$state,$stateParams,$firebaseAuth) {
+    
+
+}])
+
+
+MobileApp.controller('videoCtrl', ['$scope', '$stateParams','$timeout','$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams,$timeout,$ionicLoading) {
+
+    // Setup the loader
+  $ionicLoading.show({
+    content: 'Loading',
+    animation: 'fade-in',
+    showBackdrop: true,
+    maxWidth: 200,
+    showDelay: 0
+  });
+  
+  // Set a timeout to clear loader
+  $timeout(function () {
+    $ionicLoading.hide();
+  }, 5000);
+
+
+}])
+
+MobileApp.controller('galleryCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+MobileApp.controller('booksCtrl', function ($scope, $http) {
 
     $scope.booksResult = [];
 
@@ -136,7 +214,7 @@ function ($scope, $stateParams) {
 
   })
 
-.controller('nytimesCtrl', function ($scope, $http) {
+MobileApp.controller('nytimesCtrl', function ($scope, $http) {
 
        $scope.worldResult = [];
         $scope.techResult = [];
@@ -207,7 +285,7 @@ function ($scope, $stateParams) {
 
 })
 
-.controller('feedbackCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+MobileApp.controller('feedbackCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
@@ -217,7 +295,7 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('articlesCtrl', function ($scope, $http) {
+MobileApp.controller('articlesCtrl', function ($scope, $http) {
 
        $scope.articlesResult = [];
 
@@ -239,7 +317,7 @@ function ($scope, $stateParams) {
 
 })
 
-.controller('classesCtrl', function ($scope, $http) {
+MobileApp.controller('classesCtrl', function ($scope, $http) {
         $scope.venueList = new Array();
         //$scope.mostRecentReview;
         $scope.getVenues = function () {
@@ -310,3 +388,103 @@ function ($scope, $stateParams) {
 
 
 })
+MobileApp.controller('gameCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+var rows = 10;
+var cols = 10;
+var squareSize = 30;
+
+// get the container element
+var gameBoardContainer = document.getElementById("gameboard");
+
+// make the grid columns and rows
+for (i = 0; i < cols; i++) {
+	for (j = 0; j < rows; j++) {
+		
+		// create a new div HTML element for each grid square and make it the right size
+		var square = document.createElement("div");
+		gameBoardContainer.appendChild(square);
+
+    // give each div element a unique id based on its row and column, like "s00"
+		square.id = 's' + j + i;			
+		
+		// set each grid square's coordinates: multiples of the current row or column number
+		var topPosition = j * squareSize;
+		var leftPosition = i * squareSize;			
+		
+		// use CSS absolute positioning to place each grid square on the page
+		square.style.top = topPosition + 'px';
+		square.style.left = leftPosition + 'px';						
+	}
+}
+
+/* lazy way of tracking when the game is won: just increment hitCount on every hit
+   in this version, and according to the official Hasbro rules (http://www.hasbro.com/common/instruct/BattleShip_(2002).PDF)
+   there are 17 hits to be made in order to win the game:
+      Carrier     - 5 hits
+      Battleship  - 4 hits
+      Destroyer   - 3 hits
+      Submarine   - 3 hits
+      Patrol Boat - 2 hits
+*/
+var hitCount = 0;
+
+/* create the 2d array that will contain the status of each square on the board
+   and place ships on the board (later, create function for random placement!)
+   0 = empty, 1 = part of a ship, 2 = a sunken part of a ship, 3 = a missed shot
+*/
+var gameBoard = [
+				[0,0,0,1,1,1,1,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,1,0,0,0],
+				[0,0,0,0,0,0,1,0,0,0],
+				[1,0,0,0,0,0,1,1,1,1],
+				[1,0,0,0,0,0,0,0,0,0],
+				[1,0,0,1,0,0,0,0,0,0],
+				[1,0,0,1,0,0,0,0,0,0],
+				[1,0,0,0,0,0,0,0,0,0]
+				]
+
+// set event listener for all elements in gameboard, run fireTorpedo function when square is clicked
+gameBoardContainer.addEventListener("click", fireTorpedo, false);
+
+// initial code via http://www.kirupa.com/html5/handling_events_for_many_elements.htm:
+function fireTorpedo(e) {
+    // if item clicked (e.target) is not the parent element on which the event listener was set (e.currentTarget)
+	if (e.target !== e.currentTarget) {
+        // extract row and column # from the HTML element's id
+		var row = e.target.id.substring(1,2);
+		var col = e.target.id.substring(2,3);
+        //alert("Clicked on row " + row + ", col " + col);
+				
+		// if player clicks a square with no ship, change the color and change square's value
+		if (gameBoard[row][col] == 0) {
+			e.target.style.background = '#bbb';
+			// set this square's value to 3 to indicate that they fired and missed
+			gameBoard[row][col] = 3;
+			
+		// if player clicks a square with a ship, change the color and change square's value
+		} else if (gameBoard[row][col] == 1) {
+			e.target.style.background = 'red';
+			// set this square's value to 2 to indicate the ship has been hit
+			gameBoard[row][col] = 2;
+			
+			// increment hitCount each time a ship is hit
+			hitCount++;
+			// this definitely shouldn't be hard-coded, but here it is anyway. lazy, simple solution:
+			if (hitCount == 17) {
+				alert("All enemy battleships have been defeated! You win!");
+			}
+			
+		// if player clicks a square that's been previously hit, let them know
+		} else if (gameBoard[row][col] > 1) {
+			alert("Stop wasting your torpedos! You already fired at this location.");
+		}		
+    }
+    e.stopPropagation();
+}
+}])

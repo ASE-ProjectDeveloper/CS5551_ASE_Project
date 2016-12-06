@@ -136,6 +136,15 @@ angular.module('app.routes', [])
       }
     }
   })
+  .state('menu.game', {
+    url: '/page20',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/game.html',
+        controller: 'gameCtrl'
+      }
+    }
+  })
 
 
 $urlRouterProvider.otherwise('/page2')
