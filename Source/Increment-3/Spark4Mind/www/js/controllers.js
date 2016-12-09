@@ -105,6 +105,30 @@ function ($scope, $stateParams) {
 
 }])
 
+  .controller('booksCtrl', function ($scope, $http) {
+
+    $scope.booksResult = [];
+
+
+
+    $scope.searchBooks=function(){
+
+      var searchAuthor = document.getElementById("author").value;
+      var searchTitle = document.getElementById("title").value;
+
+        $http.get('https://www.googleapis.com/books/v1/volumes?q='+searchTitle+'+inauthor:'+searchAuthor+'&key=AIzaSyDEBimHfVEGQYpNLAaGMitQXizvc1w9Zdc').success(function(response){
+        angular.forEach(response.items, function(child){
+          console.log (child);
+          $scope.booksResult.push(child);
+        });
+      });
+    }
+
+
+
+
+  })
+
 .controller('nytimesCtrl', function ($scope, $http) {
 
        $scope.worldResult = [];
